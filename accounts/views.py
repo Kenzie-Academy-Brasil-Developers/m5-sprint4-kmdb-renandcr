@@ -1,17 +1,17 @@
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
 from django.shortcuts import get_list_or_404
 from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.pagination import PageNumberPagination
 
+from permissions.admin_permission import CustomAdminPermission
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
-from rest_framework.authentication import TokenAuthentication
-from permissions.admin_permission import CustomAdminPermission
 
-from accounts.models import User
-from accounts.serializers import UserSerializer
 from accounts.serializers import UserLoginSerializer
+from accounts.serializers import UserSerializer
+from accounts.models import User
 
 class CreateUser(APIView):
     def post(self, request):
@@ -43,6 +43,7 @@ class LoginUsers(APIView):
             token, _ = Token.objects.get_or_create(user=user_instance)
 
             return Response({"token": token.key})
+
 
         return Response(
             {"detail": "Invalid email or password"}, status.HTTP_401_UNAUTHORIZED

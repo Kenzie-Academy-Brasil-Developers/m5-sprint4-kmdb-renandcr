@@ -1,16 +1,16 @@
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
 from rest_framework.pagination import PageNumberPagination 
+from rest_framework.response import Response
 from django.shortcuts import get_list_or_404
+from rest_framework.views import APIView
+from rest_framework import status
 
-from rest_framework.authentication import TokenAuthentication
 from permissions.admin_permission import CustomAdminPermission
+from rest_framework.authentication import TokenAuthentication
 from permissions.read_only import ReadOnly 
 
-from movies.models import Movie
 from movies.serializers import MovieSerializer 
+from movies.models import Movie
 
 class CreateListAllMovies(APIView, PageNumberPagination):
     authentication_classes = [TokenAuthentication]
@@ -51,7 +51,7 @@ class ListUpdateDeleteMovie(APIView):
         movie_instance = get_list_or_404(Movie, id=movie_id)[0]
         movie_instance.delete()
 
-        return Response(status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 

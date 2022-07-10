@@ -1,17 +1,17 @@
-from rest_framework.views import APIView
-from rest_framework.views import Response
-from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
 from django.shortcuts import get_list_or_404
+from rest_framework.views import Response
+from rest_framework.views import APIView
+from rest_framework import status
 
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.authentication import TokenAuthentication
 
 from .permissions import CustomPermissionToDelete
 
-from .models import Review
-from movies.models import Movie
 from .serializers import ReviewSerializer
+from movies.models import Movie
+from .models import Review
 
 
 class CreateListAllMovieReview(APIView, PageNumberPagination):
@@ -48,7 +48,7 @@ class DeleteReview(APIView):
         review_instance = get_list_or_404(Review, id=review_id)[0]
         review_instance.delete()
 
-        return Response(status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class ListAllReviews(APIView, PageNumberPagination):
     def get(self, request):
